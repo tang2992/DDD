@@ -1,4 +1,4 @@
-package com.tangkf.ddd.liska;
+package com.tangkf.ddd.lsp;
 
 /**
  * 后来，我们需要增加一个新的功能：完成两数相加，然后再与100求和，由类B来负责。即类B需要完成两个功能：

@@ -1,4 +1,4 @@
-package com.tangkf.ddd.single;
+package com.tangkf.ddd.srp;
 
 /**
  * 当需要增加鱼这一种类时，下面的修改是最简单和最快的

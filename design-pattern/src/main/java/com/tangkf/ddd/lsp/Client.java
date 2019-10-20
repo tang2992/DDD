@@ -1,4 +1,4 @@
-package com.tangkf.ddd.liska;
+package com.tangkf.ddd.lsp;
 
 public class Client{
     public static void main(String[] args){

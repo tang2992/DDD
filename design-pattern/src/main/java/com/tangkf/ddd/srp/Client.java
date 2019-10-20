@@ -1,4 +1,4 @@
-package com.tangkf.ddd.single;
+package com.tangkf.ddd.srp;
 
 public class Client {
     public static void main(String[] args){
