@@ -41,10 +41,10 @@ public class Cargo implements Serializable {
     private String description;
 
     @TableField("originLocation_code")
-    private String originlocationCode;
+    private String originLocationCode;
 
     @TableField("destinationLocation_code")
-    private String destinationlocationCode;
+    private String destinationLocationCode;
 
     private LocalDateTime createdAt;
 

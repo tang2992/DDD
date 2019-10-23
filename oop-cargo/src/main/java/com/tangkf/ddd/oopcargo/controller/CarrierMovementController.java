@@ -1,7 +1,13 @@
 package com.tangkf.ddd.oopcargo.controller;
 
-import org.springframework.stereotype.Controller;
+import com.tangkf.ddd.oopcargo.entity.CarrierMovement;
+import com.tangkf.ddd.oopcargo.service.ICarrierMovementService;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -12,8 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author tangkf
  * @since 2019-10-22
  */
-@Controller
-@RequestMapping("/carrier")
+@RestController
 public class CarrierMovementController {
+    @Resource
+    private ICarrierMovementService carrierMovementService;
 
+    @RequestMapping(value = "/routing/carrier", method = RequestMethod.GET)
+    public List<CarrierMovement> carriers() {
+        return carrierMovementService.list();
+    }
 }

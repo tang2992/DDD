@@ -8,10 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
-
 import java.time.LocalDateTime;
-
-import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,8 +20,8 @@ public class CargoServiceImplTest {
     public void book() {
         Cargo cargo = Cargo.builder()
                 .senderPhone("125369")
-                .destinationlocationCode("HZ")
-                .originlocationCode("BJ")
+                .destinationLocationCode("HZ")
+                .originLocationCode("BJ")
                 .description("测试")
                 .createdAt(LocalDateTime.now())
                 .build();

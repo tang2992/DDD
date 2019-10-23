@@ -1,9 +1,9 @@
 package com.tangkf.ddd.oopcargo.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
@@ -23,17 +23,19 @@ public class CarrierMovement {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId
     private String scheduleId;
 
     @TableField("fromLocation_code")
-    private String fromlocationCode;
+    private String fromLocationCode;
 
     @TableField("toLocation_code")
-    private String tolocationCode;
+    private String toLocationCode;
+    @TableField("starttime")
+    private LocalDateTime startTime;
 
-    private LocalDateTime starttime;
-
-    private LocalDateTime arrivetime;
+    @TableField("arrivetime")
+    private LocalDateTime arriveTime;
 
     private LocalDateTime createdAt;
 

@@ -1,5 +1,6 @@
 package com.tangkf.ddd.oopcargo.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -19,7 +20,7 @@ import lombok.experimental.Accessors;
 public class Location {
 
     private static final long serialVersionUID = 1L;
-
+    @TableId
     private String code;
 
     private String name;

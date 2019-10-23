@@ -1,12 +1,13 @@
 package com.tangkf.ddd.oopcargo.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tangkf.ddd.oopcargo.entity.Cargo;
+import com.tangkf.ddd.oopcargo.event.EventPublisher;
 import com.tangkf.ddd.oopcargo.mapper.CargoMapper;
 import com.tangkf.ddd.oopcargo.service.ICargoService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class CargoServiceImpl extends ServiceImpl<CargoMapper, Cargo> implements ICargoService {
+    @Autowired
+    private EventPublisher eventPublisher;
 
     @Override
     public void book(Cargo cargo) {
@@ -36,5 +39,6 @@ public class CargoServiceImpl extends ServiceImpl<CargoMapper, Cargo> implements
         baseMapper.insert(cargo);
 
         // TODO 发布货运事件
+        eventPublisher.publish(cargo);
     }
 }
