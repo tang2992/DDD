@@ -1,15 +1,13 @@
-package com.tangkf.ddd.oopcargo.event.comsumer;
+package com.tangkf.ddd.cargo.dddcargo.infrastructure.event.comsumer;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import com.tangkf.ddd.oopcargo.entity.Cargo;
-import lombok.extern.slf4j.Slf4j;
+import com.tangkf.ddd.cargo.dddcargo.infrastructure.event.dto.CargoBookDomainEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-@Slf4j
 @Component
 public class CargoListener {
 
@@ -22,8 +20,8 @@ public class CargoListener {
     }
 
     @Subscribe
-    public void recordCargoBook(Cargo event) {
+    public void recordCargoBook(CargoBookDomainEvent event) {
         // invoke application service or domain service
-        log.info("有新订单{}，请及时处理", event.getId());
+        System.out.println("CargoListener: recordCargoBook......");
     }
 }

@@ -68,7 +68,7 @@ public class CargoController{
     }
 
     @RequestMapping(value = "/{cargoId}", method = RequestMethod.GET)
-    public Cargo cargo(@PathVariable String cargoId) {
+    public CargoVo cargo(@PathVariable String cargoId) {
         return assemblerCargoVo(cargoService.getById(cargoId));
     }
 

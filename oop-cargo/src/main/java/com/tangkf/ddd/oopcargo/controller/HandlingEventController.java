@@ -61,10 +61,7 @@ public class HandlingEventController {
             eventVo.setEventType(EventTypeEnum.of(eventVo.getEventtype()).name());
             if (!StringUtils.isEmpty(event.getScheduleId())) {
                 CarrierMovement cm = carrierMovementService.getById(event.getScheduleId());
-                CarrierMovementVo carrierMovementVo = new CarrierMovementVo();
-                BeanUtils.copyProperties(cm, carrierMovementVo);
-                carrierMovementVo.setFromLocationName(locationService.getById(carrierMovementVo.getFromLocationCode()).getName());
-                carrierMovementVo.setToLocationName(locationService.getById(carrierMovementVo.getToLocationCode()).getName());
+                CarrierMovementVo carrierMovementVo = assembleCarrierMovementVo(cm);
 
                 eventVo.setCarrierMovement(carrierMovementVo);
             }
@@ -75,6 +72,13 @@ public class HandlingEventController {
         return new CargoHandlingEventVo(assemblerCargoVo(cargo), handlingEventVoList);
     }
 
+    private CarrierMovementVo assembleCarrierMovementVo(CarrierMovement cm) {
+        CarrierMovementVo carrierMovementVo = new CarrierMovementVo();
+        BeanUtils.copyProperties(cm, carrierMovementVo);
+        carrierMovementVo.setFromLocationName(locationService.getById(carrierMovementVo.getFromLocationCode()).getName());
+        carrierMovementVo.setToLocationName(locationService.getById(carrierMovementVo.getToLocationCode()).getName());
+        return carrierMovementVo;
+    }
 
 
     private CargoVo assemblerCargoVo(Cargo cargo) {
