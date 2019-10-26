@@ -33,20 +33,20 @@ public class CargoController {
         cargoService.book(cmd);
     }
 
-    @RequestMapping(value = "/{cargoId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/cargo/{cargoId}", method = RequestMethod.GET)
     public CargoVo cargo(@PathVariable String cargoId) {
         return cargoService.getCargo(cargoId);
     }
 
-    @RequestMapping(value = "/{cargoId}/sender", method = RequestMethod.PUT)
+    @RequestMapping(value = "/cargo/{cargoId}/sender", method = RequestMethod.PUT)
     public void modifySender(@PathVariable String cargoId,
                              @RequestBody CargoSenderUpdateCmd cmd) {
         cmd.setCargoId(cargoId);
         cargoService.updateCargoSender(cmd);
     }
 
-    @RequestMapping(value = "/{cargoId}/delivery", method = RequestMethod.PUT)
-    public void modifydestinationLocationCode(@PathVariable String cargoId,
+    @RequestMapping(value = "/cargo/{cargoId}/delivery", method = RequestMethod.PUT)
+    public void modifyDestinationLocationCode(@PathVariable String cargoId,
                                               @RequestBody CargoDeliveryUpdateCmd cmd) {
         cmd.setCargoId(cargoId);
         cargoService.updateCargoDelivery(cmd);

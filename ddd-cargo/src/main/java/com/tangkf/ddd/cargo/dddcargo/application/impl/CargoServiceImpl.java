@@ -123,6 +123,7 @@ public class CargoServiceImpl implements CargoService {
         }
 
         Cargo updCargo = new Cargo();
+        updCargo.setId(cmd.getCargoId());
         DeliverySpecification deliverySpecification = new DeliverySpecification();
         deliverySpecification.setDestinationLocationCode(cmd.getDestinationLocationCode());
         updCargo.setDeliverySpecification(deliverySpecification);

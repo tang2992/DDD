@@ -14,8 +14,10 @@ public class CargoConverter {
         target.setSenderPhone(cargo.getSenderPhone());
         target.setDescription(cargo.getDescription());
         DeliverySpecification delivery = cargo.getDeliverySpecification();
-        target.setDestinationLocationCode(delivery.getDestinationLocationCode());
-        target.setOriginLocationCode(delivery.getOriginLocationCode());
+        if (delivery != null) {
+            target.setDestinationLocationCode(delivery.getDestinationLocationCode());
+            target.setOriginLocationCode(delivery.getOriginLocationCode());
+        }
         target.setCreatedAt(LocalDateTime.now());
         return target;
     }
