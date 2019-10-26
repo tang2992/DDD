@@ -2,6 +2,8 @@ package com.tangkf.ddd.cargo.dddcargo.domain.repository;
 
 import com.tangkf.ddd.cargo.dddcargo.domain.entity.CarrierMovement;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -13,4 +15,6 @@ import com.tangkf.ddd.cargo.dddcargo.domain.entity.CarrierMovement;
 public interface CarrierMovementRepository {
 
     CarrierMovement getById(String scheduleId);
+
+    List<CarrierMovement> selectAll();
 }

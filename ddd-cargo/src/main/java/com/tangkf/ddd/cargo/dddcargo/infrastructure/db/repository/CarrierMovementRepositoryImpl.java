@@ -10,6 +10,9 @@ import com.tangkf.ddd.cargo.dddcargo.infrastructure.db.mapper.CarrierMovementMap
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -32,5 +35,16 @@ public class CarrierMovementRepositoryImpl extends ServiceImpl<CarrierMovementMa
         }
         return CarrierMovementConverter.deserialize(carrierMovementDO);
 
+    }
+
+    @Override
+    public List<CarrierMovement> selectAll() {
+        List<CarrierMovementDO> list = list();
+
+        List<CarrierMovement> carrierMovementList = new ArrayList<>();
+        for (CarrierMovementDO cm : list) {
+            carrierMovementList.add(CarrierMovementConverter.deserialize(cm));
+        }
+        return carrierMovementList;
     }
 }

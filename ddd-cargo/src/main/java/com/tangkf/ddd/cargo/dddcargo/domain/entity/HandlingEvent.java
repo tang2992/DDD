@@ -41,4 +41,7 @@ public class HandlingEvent {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date datetime;
 
+    public boolean canModifyCargo() {
+        return eventType == EventTypeEnum.RECIEVE;
+    }
 }

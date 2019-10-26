@@ -29,7 +29,7 @@ public class CargoRepositoryImpl extends ServiceImpl<CargoMapper, CargoDO> imple
     public void save(Cargo cargo) {
         // 保存货运订单
         CargoDO cargoDo = CargoConverter.serialize(cargo);
-        save(cargoDo);
+        saveOrUpdate(cargoDo);
     }
 
     @Override

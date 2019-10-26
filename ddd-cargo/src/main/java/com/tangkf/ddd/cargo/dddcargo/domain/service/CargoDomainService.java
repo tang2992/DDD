@@ -28,4 +28,18 @@ public class CargoDomainService {
 
         return deliveryHistory;
     }
+
+    public void updateCargoSender(Cargo cargo, String senderPhone, HandlingEvent latestEvent) {
+        // 货运在某个阶段之后会拒绝修改寄件人信息
+        if (null != latestEvent
+                && !latestEvent.canModifyCargo()) { throw new IllegalArgumentException(
+                "Sender cannot be changed after RECIEVER Status."); }
+
+        // 保存
+        Cargo updCargo = new Cargo();
+        updCargo.setId(cargo.getId());
+        updCargo.setSenderPhone(senderPhone);
+
+        cargoRepository.save(updCargo);
+    }
 }

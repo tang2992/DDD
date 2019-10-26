@@ -1,6 +1,6 @@
 package com.tangkf.ddd.cargo.dddcargo.application.assembler;
 
-import com.tangkf.ddd.cargo.dddcargo.application.dto.CargoDTO;
+import com.tangkf.ddd.cargo.dddcargo.application.dto.CargoVo;
 import com.tangkf.ddd.cargo.dddcargo.domain.entity.Cargo;
 import com.tangkf.ddd.cargo.dddcargo.domain.entity.Location;
 import com.tangkf.ddd.cargo.dddcargo.domain.repository.LocationRepository;
@@ -11,14 +11,14 @@ import org.springframework.stereotype.Component;
 import java.util.function.Function;
 
 @Component
-public class CargoDTOAssembler implements Function<Cargo, CargoDTO> {
+public class CargoDTOAssembler implements Function<Cargo, CargoVo> {
 
     @Autowired
     private LocationRepository repository;
 
     @Override
-    public CargoDTO apply(Cargo t) {
-        CargoDTO target = new CargoDTO();
+    public CargoVo apply(Cargo t) {
+        CargoVo target = new CargoVo();
         BeanUtils.copyProperties(t, target);
         Location select = repository.getById(t.getDeliverySpecification().getOriginLocationCode());
         target.setOriginLocationName(select.getName());

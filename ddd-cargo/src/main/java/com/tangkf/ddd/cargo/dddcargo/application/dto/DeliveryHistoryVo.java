@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeliveryHistoryVo {
-    private CargoDTO cargo;
+    private CargoVo cargo;
 
     List<HandlingEventVo> events;
 }

@@ -33,7 +33,8 @@ public class HandlingEventRepositoryImpl extends ServiceImpl<HandlingEventMapper
     @Override
     public List<HandlingEvent> selectByCargo(String cargoId) {
         QueryWrapper<HandlingEventDO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("cargo_id", cargoId);
+        queryWrapper.eq("cargo_id", cargoId)
+            .orderByDesc("updated_at");
         List<HandlingEventDO> list = super.list(queryWrapper);
 
         List<HandlingEvent> handlingEvents = new ArrayList<>();

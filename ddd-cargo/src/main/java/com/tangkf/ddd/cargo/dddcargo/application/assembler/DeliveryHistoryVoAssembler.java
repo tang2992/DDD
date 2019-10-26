@@ -1,6 +1,6 @@
 package com.tangkf.ddd.cargo.dddcargo.application.assembler;
 
-import com.tangkf.ddd.cargo.dddcargo.application.dto.CargoDTO;
+import com.tangkf.ddd.cargo.dddcargo.application.dto.CargoVo;
 import com.tangkf.ddd.cargo.dddcargo.application.dto.DeliveryHistoryVo;
 import com.tangkf.ddd.cargo.dddcargo.application.dto.HandlingEventVo;
 import com.tangkf.ddd.cargo.dddcargo.domain.aggregate.DeliveryHistory;
@@ -29,8 +29,8 @@ public class DeliveryHistoryVoAssembler implements Function<DeliveryHistory, Del
     public DeliveryHistoryVo apply(DeliveryHistory t) {
         DeliveryHistoryVo deliveryHistoryVo = new DeliveryHistoryVo();
 
-        CargoDTO cargoDTO = cargoDTOAssembler.apply(t.getCargo());
-        deliveryHistoryVo.setCargo(cargoDTO);
+        CargoVo cargoVo = cargoDTOAssembler.apply(t.getCargo());
+        deliveryHistoryVo.setCargo(cargoVo);
 
         List<HandlingEventVo> eventVoList = new ArrayList<>();
         List<HandlingEvent> events = t.getEvents();

@@ -1,9 +1,6 @@
 package com.tangkf.ddd.cargo.dddcargo.application;
 
-import com.tangkf.ddd.cargo.dddcargo.application.dto.CargoBookCmd;
-import com.tangkf.ddd.cargo.dddcargo.application.dto.CargoDTO;
-import com.tangkf.ddd.cargo.dddcargo.application.dto.CargoQueryByCustomerQry;
-import com.tangkf.ddd.cargo.dddcargo.application.dto.DeliveryHistoryVo;
+import com.tangkf.ddd.cargo.dddcargo.application.dto.*;
 
 import java.util.List;
 
@@ -23,15 +20,19 @@ public interface CargoService {
      */
     void book(CargoBookCmd cmd);
 
-    List<CargoDTO> queryCargos();
+    List<CargoVo> queryCargos();
 
     /**
      * @param qry
      * @return
      */
-    List<CargoDTO> queryCargos(CargoQueryByCustomerQry qry);
+    List<CargoVo> queryCargos(CargoQueryByCustomerQry qry);
 
-    CargoDTO getCargo(String cargoId);
+    CargoVo getCargo(String cargoId);
 
     DeliveryHistoryVo queryHistory(String cargoId);
+
+    void updateCargoSender(CargoSenderUpdateCmd cmd);
+
+    void updateCargoDelivery(CargoDeliveryUpdateCmd cmd);
 }

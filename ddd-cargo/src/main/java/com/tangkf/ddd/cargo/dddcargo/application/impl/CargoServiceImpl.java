@@ -4,19 +4,19 @@ import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.tangkf.ddd.cargo.dddcargo.application.CargoService;
 import com.tangkf.ddd.cargo.dddcargo.application.assembler.CargoDTOAssembler;
 import com.tangkf.ddd.cargo.dddcargo.application.assembler.DeliveryHistoryVoAssembler;
-import com.tangkf.ddd.cargo.dddcargo.application.dto.CargoBookCmd;
-import com.tangkf.ddd.cargo.dddcargo.application.dto.CargoDTO;
-import com.tangkf.ddd.cargo.dddcargo.application.dto.CargoQueryByCustomerQry;
-import com.tangkf.ddd.cargo.dddcargo.application.dto.DeliveryHistoryVo;
+import com.tangkf.ddd.cargo.dddcargo.application.dto.*;
 import com.tangkf.ddd.cargo.dddcargo.domain.aggregate.DeliveryHistory;
 import com.tangkf.ddd.cargo.dddcargo.domain.entity.Cargo;
+import com.tangkf.ddd.cargo.dddcargo.domain.entity.HandlingEvent;
 import com.tangkf.ddd.cargo.dddcargo.domain.repository.CargoRepository;
+import com.tangkf.ddd.cargo.dddcargo.domain.repository.HandlingEventRepository;
 import com.tangkf.ddd.cargo.dddcargo.domain.service.CargoDomainService;
 import com.tangkf.ddd.cargo.dddcargo.domain.valueobject.DeliverySpecification;
 import com.tangkf.ddd.cargo.dddcargo.infrastructure.event.DomainEventPublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -39,6 +39,8 @@ public class CargoServiceImpl implements CargoService {
     private CargoRepository cargoRepository;
     @Resource
     private CargoDomainService cargoDomainService;
+    @Resource
+    private HandlingEventRepository handlingEventRepository;
 
     @Autowired
     private CargoDTOAssembler cargoDTOAssembler;
@@ -67,21 +69,21 @@ public class CargoServiceImpl implements CargoService {
     }
 
     @Override
-    public List<CargoDTO> queryCargos() {
+    public List<CargoVo> queryCargos() {
         List<Cargo> cargoList = cargoRepository.selectAll();
 
         return cargoList.stream().map(cargoDTOAssembler::apply).collect(Collectors.toList());
     }
 
     @Override
-    public List<CargoDTO> queryCargos(CargoQueryByCustomerQry qry) {
+    public List<CargoVo> queryCargos(CargoQueryByCustomerQry qry) {
         List<Cargo> cargoList = cargoRepository.selectByCustomer(qry.getSenderPhone());
 
         return cargoList.stream().map(cargoDTOAssembler::apply).collect(Collectors.toList());
     }
 
     @Override
-    public CargoDTO getCargo(String cargoId) {
+    public CargoVo getCargo(String cargoId) {
         Cargo cargo = cargoRepository.getById(cargoId);
         return cargoDTOAssembler.apply(cargo);
     }
@@ -93,5 +95,37 @@ public class CargoServiceImpl implements CargoService {
 
 
         return deliveryHistoryVoAssembler.apply(deliveryHistory);
+    }
+
+    @Override
+    public void updateCargoSender(CargoSenderUpdateCmd cmd) {
+        // find
+        Cargo cargo = cargoRepository.getById(cmd.getCargoId());
+        // 判断货物是否存在，不存在则拒绝修改
+        if (cargo == null) {
+            throw new RuntimeException("货运订单不存在");
+        }
+
+        List<HandlingEvent> events = handlingEventRepository.selectByCargo(cmd.getCargoId());
+
+        // domain service
+        cargoDomainService.updateCargoSender(cargo, cmd.getSenderPhone(), CollectionUtils.isEmpty(events) ? null : events.get(0));
+
+    }
+
+    @Override
+    public void updateCargoDelivery(CargoDeliveryUpdateCmd cmd) {
+        // find
+        Cargo cargo = cargoRepository.getById(cmd.getCargoId());
+        // 判断货物是否存在，不存在则拒绝修改
+        if (cargo == null) {
+            throw new RuntimeException("货运订单不存在");
+        }
+
+        Cargo updCargo = new Cargo();
+        DeliverySpecification deliverySpecification = new DeliverySpecification();
+        deliverySpecification.setDestinationLocationCode(cmd.getDestinationLocationCode());
+        updCargo.setDeliverySpecification(deliverySpecification);
+        cargoRepository.save(updCargo);
     }
 }
